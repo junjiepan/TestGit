@@ -1,0 +1,31 @@
+# 自定义查询参数与文件输出路径参数 请保证在运行前，out目录下没有内容
+conf:
+ assetId: A350000584
+ outputFilePath: E:\script\out\
+
+# 数据库连接信息
+database:
+ url: jdbc:mysql://10.1.12.19:3306/public_udmp?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true
+ username: public_udmp
+ password: public_soft
+
+# 资产 sql 语句参数配置
+asset:
+ queries:
+  - select * from MDI_ASSETS_INFO where ASSETS_ID in (:assetsId);
+  - select * from MDI_ASSETS_ENTITY_REL where ASSETS_ID in (:assetsId);
+  - select t1.* from MDI_ASSETS_COL t1 inner join MDI_ASSETS_INFO t2 on t1.ASSETS_IMAGE_ID=t2.ASSETS_IMAGE_ID where t2.ASSETS_ID in (:assetsId);
+  - select t1.*  from MDI_ASSETS_COL_DESC t1 inner join MDI_ASSETS_INFO t2 on t1.ASSETS_IMAGE_ID=t2.ASSETS_IMAGE_ID where t2.ASSETS_ID in (:assetsId);
+
+# 实体 sql 语句参数配置
+entity:
+ queries:
+  - select t1.*  from MDI_ENTITY_REPO t1 inner join MDI_ASSETS_ENTITY_REL t2 on t1.PHY_ID=t2.PHY_ID where t2.ASSETS_ID in (:assetsId);
+  - select t1.*  from MDI_ENTITY_INFO t1 inner join MDI_ENTITY_REPO t2 on t1.ENTITY_IMAGE_ID=t2.ENTITY_IMAGE_ID inner join MDI_ASSETS_ENTITY_REL t3 on t2.PHY_ID=t3.PHY_ID where t3.ASSETS_ID in (:assetsId);
+  - select t1.*  from MDI_ENTITY_EXT t1 inner join MDI_ENTITY_REPO t2 on t1.ENTITY_IMAGE_ID=t2.ENTITY_IMAGE_ID inner join MDI_ASSETS_ENTITY_REL t3 on t2.PHY_ID=t3.PHY_ID where t3.ASSETS_ID in (:assetsId);
+  - select t1.*  from mdi_phy_info t1  inner join MDI_ENTITY_REPO t2 on t1.PHY_IMAGE_ID=t2.PHY_IMAGE_ID inner join MDI_ASSETS_ENTITY_REL t3 on t2.PHY_ID=t3.PHY_ID where t3.ASSETS_ID in (:assetsId);
+  - select t1.*  from mdi_phy_ext t1  inner join MDI_ENTITY_REPO t2 on t1.PHY_IMAGE_ID=t2.PHY_IMAGE_ID inner join MDI_ASSETS_ENTITY_REL t3 on t2.PHY_ID=t3.PHY_ID where t3.ASSETS_ID in (:assetsId);
+  - select t1.*  from mdi_phy_col t1  inner join MDI_ENTITY_REPO t2 on t1.PHY_IMAGE_ID=t2.PHY_IMAGE_ID inner join MDI_ASSETS_ENTITY_REL t3 on t2.PHY_ID=t3.PHY_ID where t3.ASSETS_ID in (:assetsId);
+  - select t1.*  from mdi_phy_col_desc t1  inner join MDI_ENTITY_REPO t2 on t1.PHY_IMAGE_ID=t2.PHY_IMAGE_ID inner join MDI_ASSETS_ENTITY_REL t3 on t2.PHY_ID=t3.PHY_ID where t3.ASSETS_ID in (:assetsId);
+  - select t1.*  from mdi_phy_partition t1  inner join MDI_ENTITY_REPO t2 on t1.PHY_IMAGE_ID=t2.PHY_IMAGE_ID inner join MDI_ASSETS_ENTITY_REL t3 on t2.PHY_ID=t3.PHY_ID where t3.ASSETS_ID in (:assetsId);
+  - select t1.*  from mdi_phy_partition_detail t1  inner join MDI_ENTITY_REPO t2 on t1.PHY_IMAGE_ID=t2.PHY_IMAGE_ID inner join MDI_ASSETS_ENTITY_REL t3 on t2.PHY_ID=t3.PHY_ID where t3.ASSETS_ID in (:assetsId);
